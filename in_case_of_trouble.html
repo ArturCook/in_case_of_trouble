@@ -2,10 +2,6 @@
 body {
   margin: 0;
   background-color: #191919;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: Helvetica, Sans-serif;
 }
 a {
@@ -13,15 +9,15 @@ a {
   color: #fff;
 }
 .rainbow-button {
-  width: calc(20vw + 6px);
-  height: calc(8vw + 6px);
+  width: calc(12em + 6px);
+  height: calc(3em + 6px);
   border-radius: 5px;
   background: gray;
   display: flex;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
-  font-size: 3vw;
+  font-size: 2.5vh;
   font-weight: bold;
 }
 .rainbow-button:after {
@@ -49,8 +45,115 @@ a {
   }
 }
 
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 5em;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -2.5em;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+img {
+  height:20px;
+  width:30px;
+  display: inline;
+}
+
+span {
+  display: inline;
+  height:20px;
+  color: blue;
+}
+
+.flag-btn {
+	height: auto;
+	width: 2em;
+	border: 0.2em #191919 solid;
+	border-radius: 4px;
+	background: grey
+}
+.flag-btn:hover {
+	border: 0.2em grey solid;
+}
+.flag-btn.selected {
+	border: 0.2em white solid;
+}
+
+.flag-btn img {
+	height: 100%;
+	width: 100%;
+	background-size:cover
+}
+
+#btn-container {
+	grid-area: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+#lang-container {
+	
+	grid-area: footer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.grid-item {
+  background-color: #191919;
+}
+
+
+#grid {
+	display: grid;
+	width: 100%;
+	height: 100%;
+	grid-template-columns: minmax(auto, 10%) 1fr 4fr minmax(auto, 10%);
+	grid-template-rows: minmax(0.5em, 10%) 4fr auto auto minmax(0.5em, 5%);
+	grid-template-areas: 
+	". . . ."
+	". center center ."
+	". . . ."
+	". . footer footer"
+	". . . ."
+	;
+	grid-gap: 1px;
+}
+
 
 </style>
+<!-- flags source: https://flagicons.lipis.dev/ -->
 <html lang="en" class=""><head>
 
 	<meta charset="UTF-8">
@@ -58,40 +161,114 @@ a {
 	</head>
 
 	<body>
-	<a 
-		href="#" 
-		id="button" 
-		class="rainbow-button" 
-		alt="Click"
-	>     
-	</a>
-	
-	<a 
-		href="#" 
-		id="btn-pt-br" 
-		class="rainbow-button" 
-		alt="Click"
-	>     
-	</a>
-	
+	<div id="grid">
+
+		<div id="btn-container" class="grid-item">
+			<a  
+				href="#" 
+				id="button" 
+				class="rainbow-button" 
+				alt="Click"
+			>
+		</a>  
+		</div>
+	   
+		<div id="lang-container" class="grid-item"> 
+			<div>
+			<div id="btn-lang-PT-BR" class="flag-btn selected tooltip" >
+			   <span class="tooltiptext">Pt-Br</span>
+			   <img src="./img/br.svg">
+			</div></div>
+			 <div id="btn-lang-EN-US" class="flag-btn tooltip" >
+			   <span class="tooltiptext">En-Us</span>
+			   <img src="./img/um.svg">
+			</div>
+			 <div id="btn-lang-FR" class="flag-btn tooltip" >
+			   <span class="tooltiptext">Fr</span>
+			   <img src="./img/fr.svg">
+			</div>
+			 <div id="btn-lang-EN-AU" class="flag-btn tooltip" >
+			   <span class="tooltiptext">En-Au</span>
+			   <img src="./img/au.svg">
+			</div>
+		
+		</div>
+
+	</div>
+
+
+
 	</body>
 </html>
   
 
 <script id="btn-click">
 buttonClick = function(event) {
+	if(btn_active) return;
+	btn_active = true
   document.getElementById("button").classList.add("animated");
-  document.getElementById("button").setAttribute("alt", "FODA-SE");
+  document.getElementById("button").setAttribute("alt", fuck_it_text);
   setTimeout(function(){
 	document.getElementById("button").classList.remove("animated");
-	document.getElementById("button").setAttribute("alt", "Click");
+	document.getElementById("button").setAttribute("alt", click_text);
+	btn_active = false
   }, 2500);
 }
 
+
+disableLangBtns = function(event, obj) {
+	const langBtns = document.getElementsByClassName("flag-btn");
+	for (let i = 0; i < langBtns.length; i++) {
+		langBtns[i].classList.remove("selected");
+	}
+}
+setupBtn = function(id, func) {
+	var el = document.getElementById(id);
+	el.addEventListener('touchstart', func);
+	el.addEventListener('click', func);
+}
+
+
+const LANG_PT_BR = "PT-BR"
+const LANG_EN_US = "EN-US"
+const LANG_FR = "FR"
+const LANG_EN_AU = "EN-AU"
+
+const LANG_LIST = [
+	[LANG_PT_BR, "Click", "Foda-se"],
+	[LANG_EN_US, "Click", "Fuck It"],
+	[LANG_FR, "Click", "????"],
+	[LANG_EN_AU, "Click", "Fuck It, mate"]
+]
+
+var lang = LANG_PT_BR
+var click_text = "Click"
+var fuck_it_text = "FODA-SE"
+var btn_active = false
+
+toggleLang = function(toLang, toClickText, toFuckItText) {
+	if(lang == toLang) return;
+	lang = toLang
+	click_text = toClickText
+	fuck_it_text = toFuckItText
+	const id = 'btn-lang-' + toLang
+	disableLangBtns();
+	document.getElementById(id).classList.add("selected");
+	if(btn_active) {
+		document.getElementById("button").setAttribute("alt", toFuckItText);
+	} else {
+		document.getElementById("button").setAttribute("alt", toClickText);
+	}
+}
+
 window.addEventListener('DOMContentLoaded', function () {
-	var el = document.getElementById('button');
-	el.addEventListener('touchstart', buttonClick);
-	el.addEventListener('click', buttonClick);
+	setupBtn('button', buttonClick)
+	for (let i = 0; i < LANG_LIST.length; i++) {
+		const curr_lang = LANG_LIST[i][0]
+		const curr_click_text = LANG_LIST[i][1]
+		const curr_fuck_it_text = LANG_LIST[i][2]
+		setupBtn('btn-lang-' + curr_lang, function() { toggleLang(curr_lang, curr_click_text, curr_fuck_it_text) })
+	}
 })
 
 
