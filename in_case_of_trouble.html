@@ -1,0 +1,104 @@
+<style>
+body {
+  margin: 0;
+  background-color: #191919;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Helvetica, Sans-serif;
+}
+a {
+  text-decoration: none;
+  color: #fff;
+}
+.rainbow-button {
+  width: calc(20vw + 6px);
+  height: calc(8vw + 6px);
+  border-radius: 5px;
+  background: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-size: 3vw;
+  font-weight: bold;
+}
+.rainbow-button:after {
+  content: attr(alt);
+  width: 20vw;
+  height: 8vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rainbow-button.animated {
+  background-image: linear-gradient(
+    75deg,
+    #00c0ff 0%,
+    #ffcf00 49%,
+    #fc4f4f 80%,
+    #00c0ff 100%
+  );
+  animation: slidebg 2s linear infinite;
+}
+
+@keyframes slidebg {
+  to {
+    background-position: 20vw;
+  }
+}
+
+
+</style>
+<html lang="en" class=""><head>
+
+	<meta charset="UTF-8">
+	<title>BUTTON</title>
+	</head>
+
+	<body>
+	<a 
+		href="#" 
+		id="button" 
+		class="rainbow-button" 
+		alt="Click"
+	>     
+	</a>
+	
+	<a 
+		href="#" 
+		id="btn-pt-br" 
+		class="rainbow-button" 
+		alt="Click"
+	>     
+	</a>
+	
+	</body>
+</html>
+  
+
+<script id="btn-click">
+buttonClick = function(event) {
+alert("test")
+  document.getElementById("button").classList.add("animated");
+  document.getElementById("button").setAttribute("alt", "FODA-SE");
+  setTimeout(function(){
+	document.getElementById("button").classList.remove("animated");
+	document.getElementById("button").setAttribute("alt", "Click");
+  }, 2500);
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+	alert("test")
+	var el = document.getElementById('button');
+	el.addEventListener('touchstart', buttonClick);
+	el.addEventListener('click', buttonClick);
+})
+
+
+
+
+
+
+</script>
