@@ -80,7 +80,6 @@ a {
 
 <script id="btn-click">
 buttonClick = function(event) {
-alert("test")
   document.getElementById("button").classList.add("animated");
   document.getElementById("button").setAttribute("alt", "FODA-SE");
   setTimeout(function(){
@@ -90,7 +89,6 @@ alert("test")
 }
 
 window.addEventListener('DOMContentLoaded', function () {
-	alert("test")
 	var el = document.getElementById('button');
 	el.addEventListener('touchstart', buttonClick);
 	el.addEventListener('click', buttonClick);
