@@ -115,22 +115,44 @@ span {
 	background-size:cover
 }
 
+.about-btn {
+	border: 0.2em #191919 solid;
+	border-radius: 50%;
+}
+.about-btn:hover {
+	border: 0.2em grey solid;
+}
+.about-btn.selected {
+	border: 0.2em white solid;
+}
+
+.about-btn img {
+	height: auto;
+	width: 3em;
+	background-size:cover
+}
+
 #btn-container {
 	grid-area: center;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
+}
+#about-container {
+	grid-area: helper;
+	/* display: flex; */
+	display: none;
+	justify-content: center;
+	align-items: center;
 }
 #lang-container {
-	
 	grid-area: footer;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 .grid-item {
-  background-color: #191919;
+	background-color: #191919;
 }
 
 
@@ -144,12 +166,12 @@ span {
 	". . . ."
 	". center center ."
 	". . . ."
-	". . footer footer"
+	"helper helper footer footer"
 	". . . ."
 	;
 	grid-gap: 1px;
+	position: absolute;
 }
-
 
 </style>
 <!-- flags source: https://flagicons.lipis.dev/ -->
@@ -160,6 +182,7 @@ span {
 	</head>
 
 	<body>
+	
 	<div id="grid">
 
 		<div id="btn-container" class="grid-item">
@@ -170,6 +193,15 @@ span {
 				alt="Click"
 			>
 		</a>  
+		</div>
+		
+		<div id="about-container" class="grid-item"> 
+			<div>
+				<div id="btn-about" class="about-btn tooltip" >
+					<span class="tooltiptext">About</span>
+					<img src="./img/about.svg">
+				</div>
+			</div>
 		</div>
 	   
 		<div id="lang-container" class="grid-item"> 
@@ -197,12 +229,21 @@ span {
 					<img src="./img/au.svg">
 				</div>
 			</div>
-		
+			<div>
+				<div id="btn-lang-POL" class="flag-btn tooltip" >
+					<span class="tooltiptext">Pol</span>
+					<img src="./img/pol.svg">
+				</div>
+			</div>
+			<div>
+				<div id="btn-lang-KOR" class="flag-btn tooltip" >
+					<span class="tooltiptext">Kor</span>
+					<img src="./img/kor.svg">
+				</div>
+			</div>			
 		</div>
 
 	</div>
-
-
 
 	</body>
 </html>
@@ -239,12 +280,16 @@ const LANG_PT_BR = "PT-BR"
 const LANG_EN_US = "EN-US"
 const LANG_FR = "FR"
 const LANG_EN_AU = "EN-AU"
+const LANG_POL = "POL"
+const LANG_KOR = "KOR"
 
 const LANG_LIST = [
 	[LANG_PT_BR, "Click", "Foda-se"],
 	[LANG_EN_US, "Click", "Fuck It"],
 	[LANG_FR, "Click", "Je m'en fous"],
-	[LANG_EN_AU, "Click", "Fuck It, mate"]
+	[LANG_EN_AU, "Click", "Fuck It, mate"],
+	[LANG_POL, "Click", "Jebać to"],
+	[LANG_KOR, "Click", "씨발 됐어"],
 ]
 
 var lang = LANG_PT_BR
@@ -267,6 +312,10 @@ toggleLang = function(toLang, toClickText, toFuckItText) {
 	}
 }
 
+aboutClick = function() {
+console.log("Hi!"); console.log("How's it going?");console.log(" ");console.log("This button was created for a friend was tech lead in a software dev project");console.log("It's been through many iterations");console.log("The last one is in my instagram now:");console.log("https://www.instagram.com/cookartur/");console.log(" ");console.log("People that like this button have all a thing in common:");console.log("Stage Fright.");console.log("It's sort of the anxiety of an actor before going on stage");console.log("According to a great actress, it gets better with time, you learn to adapt to it");console.log("But never goes away");console.log("And that's a good thing");console.log("It means that you care.");console.log(" ");console.log("How's she doing?");console.log("Look, today is 22nd of Jan, 2024");console.log("Ask her in a couple of days =)");
+}
+
 window.addEventListener('DOMContentLoaded', function () {
 	setupBtn('button', buttonClick)
 	for (let i = 0; i < LANG_LIST.length; i++) {
@@ -275,11 +324,8 @@ window.addEventListener('DOMContentLoaded', function () {
 		const curr_fuck_it_text = LANG_LIST[i][2]
 		setupBtn('btn-lang-' + curr_lang, function() { toggleLang(curr_lang, curr_click_text, curr_fuck_it_text) })
 	}
+	setupBtn('btn-about', aboutClick)
 })
-
-
-
-
 
 
 </script>
